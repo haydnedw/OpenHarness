@@ -1,0 +1,19 @@
+services:
+  ohmo-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ohmo-gateway
+    restart: unless-stopped
+    command: ohmo gateway run
+    volumes:
+      - ohmo-data:/root/.ohmo
+      - openharness-config:/root/.openharness
+    environment:
+      - TZ=Europe/Berlin
+    # no ports needed for Telegram/Slack/Discord (they poll outbound),
+    # only expose if a channel requires an inbound webhook
+
+volumes:
+  ohmo-data:
+  openharness-config:
